@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .no-print, #export-menu { display: none !important; }
+        }
+        table {
+            border-collapse: collapse;
+            font-size: 0.7rem;
+            width: 100%;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 4px;
+            text-align: center;
+        }
+        th { background-color: #f3f4f6; text-align: left; }
+        .timestamp { font-size: 0.7rem; color: #4b5563; }
+        /* Reduce width of data columns in weekly grids if needed */
+        td { max-width: 70px; }
+        .task-col { text-align: left; width: 140px; font-weight: 500; white-space: normal; word-wrap: break-word; }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen text-xs p-4">
+
+    <!-- Controls -->
+    <div class="no-print bg-white p-4 shadow rounded mb-4 flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <h1 class="text-xl font-bold">Produce Monthly Report</h1>
+            <input type="month" id="report-month" class="border rounded px-2 py-1">
+            <button id="btn-generate" class="bg-blue-600 text-white px-4 py-1 rounded">Generate</button>
+        </div>
+        <div>
+            <button onclick="window.print()" class="bg-gray-600 text-white px-4 py-1 rounded">Print / PDF</button>
+            <a href="index.html" class="ml-2 text-blue-600 hover:underline">Back to Logs</a>
+        </div>
+    </div>
+
+    <!-- Report Canvas -->
+    <div id="report-container" class="bg-white shadow-xl p-8 mx-auto w-full max-w-[1400px] min-h-[800px] hidden">
+        <h2 class="text-2xl font-bold text-center mb-6" id="report-title">Monthly Report</h2>
+
+        <!-- Daily Tasks Section -->
+        <div class="grid grid-cols-12 gap-4 mb-8" id="daily-container">
+            <!-- JS injects: Header "Caretaker Log - Daily tasks", Weeks tables, Summary -->
+        </div>
+
+        <!-- Weekly Tasks Section -->
+        <div class="grid grid-cols-12 gap-4 mb-8">
+             <div class="col-span-12" id="weekly-container">
+                <h2 class="text-xl font-bold mb-2">Caretaker Log - Weekly Tasks</h2>
+                <table id="table-weekly">
+                    <thead>
+                        <tr>
+                            <th class="task-col">Weekly Tasks</th>
+                            <!-- Weeks dynamically added -->
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-weekly"></tbody>
+                </table>
+             </div>
+        </div>
+
+        <!-- Monthly Tasks Section -->
+        <div class="grid grid-cols-12 gap-4 mb-8">
+            <div class="col-span-12" id="monthly-container">
+                 <h2 class="text-xl font-bold mb-2">Caretaker Log - Monthly Tasks</h2>
+                 <table id="table-monthly">
+                    <thead>
+                        <tr>
+                            <th class="task-col">Monthly Tasks</th>
+                            <th>Completed</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-monthly"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="grid grid-cols-12 gap-4">
+            <div class="col-span-12 border p-2 h-24 border-gray-300 rounded">
+                <h3 class="font-bold mb-1 text-gray-700 text-xs">Summary / Notes for the Month</h3>
+                <textarea class="w-full h-full resize-none outline-none text-xs" placeholder="General monthly notes..."></textarea>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/shared.js"></script>
+    <script src="js/report.js"></script>
+</body>
+</html>
